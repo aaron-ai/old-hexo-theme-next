@@ -326,7 +326,8 @@ NexT.utils = {
   },
 
   isDesktop: function() {
-    return !this.isTablet() && !this.isMobile();
+    return true;
+    // return !this.isTablet() && !this.isMobile();
   },
 
   supportsPDFs: function() {

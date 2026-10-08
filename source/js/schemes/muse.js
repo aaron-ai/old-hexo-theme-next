@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   var isRight = CONFIG.sidebar.position === 'right';
   var SIDEBAR_WIDTH = CONFIG.sidebar.width || 320;
   var SIDEBAR_DISPLAY_DURATION = 200;
-  var mousePos = {};
 
   var sidebarToggleLines = {
     lines: document.querySelector('.sidebar-toggle'),
@@ -28,26 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     init            : function() {
       sidebarToggleLines.init();
 
-      window.addEventListener('mousedown', this.mousedownHandler.bind(this));
-      window.addEventListener('mouseup', this.mouseupHandler.bind(this));
-      document.querySelector('#sidebar-dimmer').addEventListener('click', this.clickHandler.bind(this));
       document.querySelector('.sidebar-toggle').addEventListener('click', this.clickHandler.bind(this));
       document.querySelector('.sidebar-toggle').addEventListener('mouseenter', this.mouseEnterHandler.bind(this));
       document.querySelector('.sidebar-toggle').addEventListener('mouseleave', this.mouseLeaveHandler.bind(this));
       window.addEventListener('sidebar:show', this.showSidebar.bind(this));
       window.addEventListener('sidebar:hide', this.hideSidebar.bind(this));
-    },
-    mousedownHandler: function(event) {
-      mousePos.X = event.pageX;
-      mousePos.Y = event.pageY;
-    },
-    mouseupHandler: function(event) {
-      var deltaX = event.pageX - mousePos.X;
-      var deltaY = event.pageY - mousePos.Y;
-      var clickingBlankPart = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY)) < 20 && event.target.matches('.main');
-      if (this.isSidebarVisible && (clickingBlankPart || event.target.matches('img.medium-zoom-image, .fancybox img'))) {
-        this.hideSidebar();
-      }
     },
     clickHandler: function() {
       this.isSidebarVisible ? this.hideSidebar() : this.showSidebar();
